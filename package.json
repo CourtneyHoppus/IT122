@@ -1,0 +1,19 @@
+{
+  "name": "it122",
+  "version": "1.0.0",
+  "description": "IT 122 Application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CourtneyHoppus/IT122.git"
+  },
+  "author": "Courtney Hoppus",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CourtneyHoppus/IT122/issues"
+  },
+  "homepage": "https://github.com/CourtneyHoppus/IT122#readme"
+}
