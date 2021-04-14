@@ -1,7 +1,15 @@
-const http = require("http");
+'use strict'
+
+import http from 'http';
+//import { readFile } from 'fs';
+import { parse } from 'querystring';
+import * as myCats from './data.js';
 
 http.createServer((req, res) => {
-  const path = req.url.toLowerCase();
+  let url = req.url.split("?");
+  let query = parse(url[1]);
+  let path = url[0].toLowerCase();
+
   switch(path) {
     case '/':
       res.writeHead(200, {'Content-Type': 'text/plain'});
@@ -9,13 +17,18 @@ http.createServer((req, res) => {
       break;
     case '/about':
       res.writeHead(200, {'Content-Type': 'text/plain'});
-      res.end('About page - I have some experience with Node but wanted to solidify it. ' +
-              'I needed an elective, and I find the structure and accountabilty' +
-              ' of taking a class is what I need to learn and not just self-teaching.');
+      res.end('About page - I like cats and have had a few!' + '\n' +
+              'Go to localhost:3000/details followed by ?name= and take a guess!');
+      break;
+    case '/detail':
+      let cat = myCats.getItem(query.name);
+      res.writeHead(200, {'Content-Type': 'text/plain'});
+      let result = (cat) ? JSON.stringify(cat) : "Didn't have that cat.";
+      res.end('Cat ' + query.name + ": " + result);
       break;
     default:
       res.writeHead(404, {'Content-Type': 'text/plain'});
-      res.end('Not found');
+      res.end('Not found, 404.');
       break;
   }
 }).listen(process.env.PORT || 3000);
