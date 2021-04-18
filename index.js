@@ -1,7 +1,6 @@
 'use strict'
 
 import http from 'http';
-//import { readFile } from 'fs';
 import { parse } from 'querystring';
 import * as myCats from './data.js';
 
@@ -12,8 +11,13 @@ http.createServer((req, res) => {
 
   switch(path) {
     case '/':
+      let cats = myCats.getAll();
       res.writeHead(200, {'Content-Type': 'text/plain'});
-      res.end('Home page - This is the beginning of my app for IT122');
+      res.write('Home page - This is the beginning of my app for IT122' + '\n' +
+                'Here are my cats: ' + '\n');
+      let results = (cats) ? JSON.stringify(cats) : "Where are the cats?.";
+      res.write(results);
+      res.end();
       break;
     case '/about':
       res.writeHead(200, {'Content-Type': 'text/plain'});
