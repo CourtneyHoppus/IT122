@@ -1,0 +1,18 @@
+<html>
+  <body class="home">
+    <a href="/"><h1>HOME</h1></a>
+    <form method="POST" action="/detail">
+      <input type="text" name="name" placeholder="name" required maxlength="100">
+      <button>Search</button>
+    </form>
+    <hr>
+    <h3>Cats</h3>
+    {{#if cats}}
+      {{#each cats}}
+        <li><a href="/detail?name={{name}}">{{name}}</a></li>
+      {{/each}}
+    {{else}}
+      {{{body}}}
+    {{/if}}
+  </body>
+</html>

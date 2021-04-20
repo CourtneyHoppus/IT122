@@ -1,0 +1,11 @@
+body {
+  background-color: bisque;
+}
+
+body.home {
+  background-color: aquamarine;
+}
+
+body.details {
+  background-color: violet;
+}

@@ -1,0 +1,14 @@
+<html>
+  <body class="details">
+      <a href="/"><h1>HOME</h1></a>
+      {{#if result}}
+        <h2>details of {{name}}:</h2>
+        <li>Name: {{result.name}}</li>
+        <li>Number: {{result.number}}</li>
+        <li>Colors: {{result.colors}}</li>
+        <li>Fat?: {{result.fat}}</li>
+      {{else}}
+        <h2>{{name}} not found</h2>
+      {{/if}}
+  </body>
+</html>
