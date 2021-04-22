@@ -1,14 +1,27 @@
 <html>
   <body class="details">
-      <a href="/"><h1>HOME</h1></a>
-      {{#if result}}
-        <h2>details of {{name}}:</h2>
-        <li>Name: {{result.name}}</li>
-        <li>Number: {{result.number}}</li>
-        <li>Colors: {{result.colors}}</li>
-        <li>Fat?: {{result.fat}}</li>
-      {{else}}
-        <h2>{{name}} not found</h2>
-      {{/if}}
+    <a href="/"><h1>HOME</h1></a>
+    {{#if result}}
+    <h2>Details of the cat named {{name}}</h2>
+    {{#with result}}
+    <table id="details">
+      <tr>
+        <td>NAME</td><td>{{name}}</td>
+      </tr>
+      <tr>
+        <td>NUMBER</td><td>{{number}}</td>
+      </tr>
+      <tr>
+        <td>FAT?</td><td>{{fat}}</td>
+      </tr>
+    </table>
+    {{/with}}   
+    {{else}}
+    <table id="details">
+      <tr>
+        <td>NAME</td><td>{{name}} not found</td>
+      </tr>
+    </table>
+    {{/if}}
   </body>
 </html>

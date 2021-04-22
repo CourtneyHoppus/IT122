@@ -1,6 +1,3 @@
-body {
-  background-color: bisque;
-}
 
 body.home {
   background-color: aquamarine;
@@ -8,4 +5,19 @@ body.home {
 
 body.details {
   background-color: violet;
+}
+
+table#details {
+  border-collapse: collapse;
+  margin: 20px;
+}
+table#details td {
+  border: 2px solid black;
+  padding: 20px;
+}
+table#details td:first-child {
+  background-color: bisque;
+}
+table#details td:last-child {
+  background-color: honeydew;
 }
