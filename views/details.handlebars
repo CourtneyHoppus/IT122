@@ -1,10 +1,9 @@
 <html>
   <body class="details">
-    <a href="/"><h1>HOME</h1></a>
+    <h4>Details of the cat named {{name}}</h4>
+    <table class="blue-grey lighten-4">
     {{#if result}}
-    <h2>Details of the cat named {{name}}</h2>
     {{#with result}}
-    <table id="details">
       <tr>
         <td>NAME</td><td>{{name}}</td>
       </tr>
@@ -14,14 +13,15 @@
       <tr>
         <td>FAT?</td><td>{{fat}}</td>
       </tr>
-    </table>
+      <tr>
+        <td>COLORS</td><td>{{colors}}</td>
+      </tr>
     {{/with}}   
     {{else}}
-    <table id="details">
       <tr>
-        <td>NAME</td><td>{{name}} not found</td>
+        <td>{{name}} not found</td>
       </tr>
-    </table>
     {{/if}}
+    </table>
   </body>
 </html>

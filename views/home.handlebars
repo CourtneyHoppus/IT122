@@ -1,21 +1,24 @@
 <html>
   <body class="home">
-    <a href="/"><h1>HOME</h1></a>
     <hr>
-    <h3>Cats</h3>
-    {{#if cats}}
-      {{#each cats}}
-        <table id="details">
-        <tr>
-          <td>NAME</td><td>{{name}}</td>
-        </tr>
-        <tr>
-          <td>DETAILS</td><td><a href="/detail?name={{name}}">Link</a></td>
-        </tr>
-        </table>
-      {{/each}}
-    {{else}}
-      {{{body}}}
-    {{/if}}
+    <div class="row">
+      {{#if cats}}
+        {{#each cats}}
+        <div class="col s12 m6 center">
+        <div class="card blue-grey lighten-3">
+          <div class="card-content black-text center" >
+            <span class="card-title">Cat: {{name}}</span>
+          </div>
+          <div class="card-action">
+            <a class="btn white-text blue-grey lighten-1"
+                href="/detail?name={{name}}">Learn more about {{name}}!</a>
+          </div>
+        </div>
+        </div>
+        {{/each}}
+      {{else}}  
+        {{{body}}}
+      {{/if}}
+    </div>
   </body>
 </html>
