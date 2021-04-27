@@ -1,4 +1,4 @@
-let myCats = [
+let cats = [
   { 
     number: "1",
     name: "Marley",
@@ -32,13 +32,30 @@ let myCats = [
 ];
 
 const getAll = () => {
-  return myCats;
+  return cats;
 };
 
 const getItem = (name) => {
-  return myCats.find((cat) => {
+  return cats.find((cat) => {
     return cat.name.toLowerCase() === name.toLowerCase();
   });
 };
 
-export { getAll, getItem };
+const addItem = (newCat) => {
+  const numberOfCats = cats.length;
+  let existingCat = getItem(newCat.name);
+  if (!existingCat) {
+    cats.push(newCat);
+  }
+  return { added: numberOfCats !== cats.length };
+};
+
+const deleteItem = (name) => {
+  const numberOfCats = cats.length;
+  cats = cats.filter((cat) => {
+    return cat.name.toLowerCase() !== name.toLowerCase();
+  });
+  return { deleted: numberOfCats !== cats.length };
+};
+
+export { getAll, getItem, addItem, deleteItem };
