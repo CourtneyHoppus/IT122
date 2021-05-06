@@ -1,9 +1,8 @@
 'use strict'
 
-import * as myCats from './data.js';
-
 import express from 'express';
 import handlebars from 'express-handlebars';
+import { Cat } from './models/cat.js';
 
 const app = express();
 
@@ -15,10 +14,12 @@ app.use(express.json());
 app.engine('handlebars', handlebars({ defaultLayout: 'main.handlebars' }));
 app.set('view engine', 'handlebars');
 
-app.get('/', (req, res) => {
-  res.render('home', {
-    cats: myCats.getAll()
-  });
+app.get('/', (req, res, next) => {
+  Cat.find({}).lean()
+    .then((cats) => {
+      res.render('home', { cats });
+    })
+    .catch(err => next(err));
 });
 
 app.get('/about', (req, res) => {
@@ -29,12 +30,13 @@ app.get('/about', (req, res) => {
   });
 });
 
-app.get('/detail', (req, res) => {
-  let cat = myCats.getItem(req.query.name);
-  res.render('details', {
-    name: req.query.name,
-    result: cat
-  });
+app.get('/detail', (req, res, next) => {
+  let catName = req.query.name
+  Cat.findOne({ name:{ $regex: catName, $options: 'i' }}).lean()
+    .then((cat) => {
+      res.render('details', { result:cat, name:catName });
+    })
+    .catch(err => next(err));
 });
 
 app.use((req, res) => {
