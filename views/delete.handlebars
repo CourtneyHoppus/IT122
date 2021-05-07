@@ -1,0 +1,21 @@
+<html>
+  <body class="delete">
+    <h4>Cat to be deleted: {{name}}</h4>
+    <hr>
+    <div class="row">
+      <div class="col s12 m6 center">
+      <div class="card blue-grey lighten-3">
+        <div class="card-content black-text center">
+          {{#if result}}
+            {{#with result}}
+              <h4>Cat has been deleted</h4>
+            {{/with}}
+          {{else}}
+            <h4>Cat not found in database</h4>
+          {{/if}}
+        </div>
+      </div>
+      </div>
+    </div>
+  </body>
+</html>

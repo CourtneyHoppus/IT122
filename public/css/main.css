@@ -6,3 +6,7 @@ body.home {
 body.details {
   background-color: floralwhite;
 }
+
+body.delete {
+  background-color: dimgray;
+}

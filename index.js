@@ -32,9 +32,19 @@ app.get('/about', (req, res) => {
 
 app.get('/detail', (req, res, next) => {
   let catName = req.query.name
-  Cat.findOne({ name:{ $regex: catName, $options: 'i' }}).lean()
+  Cat.findOne({ name:{ $regex: catName, $options: 'i' }})
+    .lean()
     .then((cat) => {
       res.render('details', { result:cat, name:catName });
+    })
+    .catch(err => next(err));
+});
+
+app.get('/delete', (req, res, next) => {
+  let catName = req.query.name
+  Cat.findOneAndDelete({ name:{ $regex: catName, $options: 'i' }})
+    .then((cat) => {
+      res.render('delete', { result:cat, name:catName });
     })
     .catch(err => next(err));
 });
