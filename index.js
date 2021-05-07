@@ -32,7 +32,7 @@ app.get('/about', (req, res) => {
 
 app.get('/detail', (req, res, next) => {
   let catName = req.query.name
-  Cat.findOne({ name:{ $regex: catName, $options: 'i' }})
+  Cat.findOne({ name: catName })
     .lean()
     .then((cat) => {
       res.render('details', { result:cat, name:catName });
@@ -42,7 +42,7 @@ app.get('/detail', (req, res, next) => {
 
 app.get('/delete', (req, res, next) => {
   let catName = req.query.name
-  Cat.findOneAndDelete({ name:{ $regex: catName, $options: 'i' }})
+  Cat.findOneAndDelete({ name:catName })
     .then((cat) => {
       res.render('delete', { result:cat, name:catName });
     })
