@@ -98,9 +98,22 @@ app.get('/api/cats/:name', (req, res, next) => {
     .catch(err => next(err));
 });
 
-// POST
+// POST add a new item to the database
+app.post('/api/create/:name/:number', (req, res, next) => {
+  let catName = req.params.name
+  Cat.updateOne({ name: catName },
+    { name: catName, number: req.params.number }, { upsert: true })
+    .then((cat) => {
+      if (!cat) {
+        res.json('the cat ' + catName + ' was not added, something is wrong!')
+      } else {
+        res.json('the cat ' + catName + ' has been added to the database')
+      }
+    })
+    .catch(err => next(err));
+  });
 
-// PUT
+// PUT update an exisiting item, if item doesn't exist, adds to database
 
 // DELETE single item from database matching req.params
 app.get('/api/delete/:name', (req, res, next) => {
