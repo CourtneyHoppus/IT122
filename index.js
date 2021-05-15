@@ -99,19 +99,24 @@ app.get('/api/cats/:name', (req, res, next) => {
 });
 
 // POST add a new item to the database
-app.post('/api/create/:name/:number', (req, res, next) => {
-  let catName = req.params.name
-  Cat.updateOne({ name: catName },
-    { name: catName, number: req.params.number }, { upsert: true })
+app.post('/api/create', (req, res, next) => {
+  let catName = req.body.name
+  if (!catName) {
+    res.json('cat must have a name')
+  }
+  Cat.findOneAndUpdate({ name: catName },
+    { name: catName, number: req.body.number, colors: req.body.colors, fat: req.body.fat },
+    ({ upsert: true, new: true }))
+    .lean()
     .then((cat) => {
       if (!cat) {
-        res.json('the cat ' + catName + ' was not added, something is wrong!')
+        res.json('sorry ' + catName + ' not created')
       } else {
-        res.json('the cat ' + catName + ' has been added to the database')
+        res.json(cat)
       }
     })
     .catch(err => next(err));
-  });
+});
 
 // PUT update an exisiting item, if item doesn't exist, adds to database
 

@@ -4,7 +4,8 @@ import { connectionInfo } from '../protected.js';
 mongoose.connect(connectionInfo, {
   dbName: 'it122_database',
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  useFindAndModify: false,
 });
 
 mongoose.connection.on('open', () => {
