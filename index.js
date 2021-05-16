@@ -63,7 +63,7 @@ app.get('/api/cats', (req, res, next) => {
     .lean()
     .then((cats) => {
       if (!cats) {
-        res.json('sorry, no cats found in database')
+        res.status(404).json('sorry, no cats found in database')
       } else {
         res.json(cats.map((cat) => {
           return {
@@ -85,7 +85,7 @@ app.get('/api/cats/:name', (req, res, next) => {
     .lean()
     .then((cat) => {
       if (!cat) {
-        res.json('sorry cat: ' + catName + ' was not found in database')
+        res.status(404).json('sorry cat: ' + catName + ' was not found in database')
       } else {
         res.json({
           name: cat.name,
@@ -102,7 +102,7 @@ app.get('/api/cats/:name', (req, res, next) => {
 app.post('/api/create', (req, res, next) => {
   let catName = req.body.name
   if (!catName) {
-    res.json('cat must have a name')
+    res.status(400).json('cat must have a name')
   }
   Cat.findOneAndUpdate({ name: catName },
     { name: catName, number: req.body.number, colors: req.body.colors, fat: req.body.fat },
@@ -110,9 +110,9 @@ app.post('/api/create', (req, res, next) => {
     .lean()
     .then((cat) => {
       if (!cat) {
-        res.json('sorry ' + catName + ' not created')
+        res.status(404).json('sorry ' + catName + ' not created')
       } else {
-        res.json(cat)
+        res.status(201).json(cat)
       }
     })
     .catch(err => next(err));
@@ -126,7 +126,7 @@ app.get('/api/delete/:name', (req, res, next) => {
   Cat.findOneAndDelete({ name: catName })
     .then((cat) => {
       if (!cat) {
-        res.json('sorry cat: ' + catName + ' was not found in database')
+        res.status(404).json('sorry cat: ' + catName + ' was not found in database')
       } else {
         res.json({ 'deleted': cat.name })
       }
