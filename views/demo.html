@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+
+      const divStyle = {
+        color: 'magenta'
+      }
+
+      const Greeting = (props) => {
+        if (props.user) {
+          return <h1 style={divStyle}>Hello, {props.user}!</h1>;
+        }
+        return <h1>Hello No-Name Queen!</h1>;
+      }
+
+      const Users = (props) => {
+        const names = ['Betty', 'Cookie', 'Arson', 'Miss Texas'];
+        const listNames = names.map((name) => <li key={name}>{name}</li>);
+        return <ul>{listNames}</ul>
+      }
+
+      ReactDOM.render(
+        <div>
+          <h1>Hello, Queens!</h1>
+          <Greeting />
+          <Users />
+          <Greeting user='Me'/>
+        </div>,
+        document.getElementById('root')
+      );
+
+    </script>
+  </body>
+</html>
