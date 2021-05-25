@@ -21,17 +21,15 @@ app.get('/', (req, res, next) => {
   Cat.find({})
     .lean()
     .then((cats) => {
-      res.render('home', { cats });
+      res.render('home', { cats: JSON.stringify(cats) });
     })
     .catch(err => next(err));
 });
 
 // about route
 app.get('/about', (req, res) => {
-  res.render('home', {
-    body: `About page - I like cats and have had a few!
-      Go to localhost:3000/details followed by ?name= and take a guess!
-      Or back to the home page to enter in the search bar.`
+  res.render('about', {
+    body: `About page - I like cats and have had a few!`
   });
 });
 
@@ -136,7 +134,7 @@ app.get('/api/delete/:name', (req, res, next) => {
 
 // 404 error for anything not defined above
 app.use((req, res) => {
-  res.render('home', {
+  res.render('about', {
     body: '404 - Sorry, Not Found.'
   });
 });

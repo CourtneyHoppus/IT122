@@ -1,24 +1,43 @@
+<!DOCTYPE html>
 <html>
   <body class="home">
-    <hr>
-    <div class="row">
-      {{#if cats}}
-        {{#each cats}}
-        <div class="col s12 m6 center">
-        <div class="card blue-grey lighten-3">
-          <div class="card-content black-text center" >
-            <span class="card-title">Cat: {{name}}</span>
-          </div>
-          <div class="card-action">
-            <a class="btn white-text blue-grey lighten-1"
-                href="/detail?name={{name}}">Learn more about {{name}}!</a>
-          </div>
-        </div>
-        </div>
-        {{/each}}
-      {{else}}  
-        {{{body}}}
-      {{/if}}
-    </div>
+    <div id="root"></div>
+    <script type="text/babel">
+
+      const cats = {{{cats}}}
+
+      // event handler
+      const showDetail = (event) => {
+        window.location.href = "/detail?name=" + event.target.innerHTML
+      }
+
+      const Cats = (props) => {
+        const listCats = props.cats.map((cat) =>
+          <li key={cat._id}>
+            <div className="col s12 m6 center">
+              <div className="card blue-grey lighten-3">
+                <div className="card-content black-text center" >
+                  <span className="card-title">
+                    Learn more about
+                  </span>
+                </div>
+                <div className="card-action">
+                  <div className="btn-large white-text blue-grey lighten-1" onClick={props.clickHandler}>
+                    {cat.name}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+          );
+        return <ul>{listCats}</ul>;
+      }
+
+      ReactDOM.render(
+        <div className="row"><Cats cats={cats} clickHandler={showDetail} /></div>,
+        document.getElementById('root')
+      );
+
+    </script>
   </body>
 </html>
