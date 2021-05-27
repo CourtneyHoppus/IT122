@@ -4,12 +4,7 @@
     <div id="root"></div>
     <script type="text/babel">
 
-      const cats = {{{cats}}}
-
-      // event handler
-      const showDetail = (event) => {
-        window.location.href = "/detail?name=" + event.target.innerHTML
-      }
+      const cats = {{{ cats }}}
 
       const Cats = (props) => {
         const listCats = props.cats.map((cat) =>
@@ -22,20 +17,69 @@
                   </span>
                 </div>
                 <div className="card-action">
-                  <div className="btn-large white-text blue-grey lighten-1" onClick={props.clickHandler}>
-                    {cat.name}
+                  <div className="btn-large white-text blue-grey lighten-1" onClick={ props.clickHandler }>
+                    { cat.name }
                   </div>
                 </div>
               </div>
             </div>
           </li>
           );
-        return <ul>{listCats}</ul>;
+        return <ul>{ listCats }</ul>;
+      }
+
+      const CatDetail = (props) => {
+        return (
+          <div className="col s12 m6 center">
+            <div className="card blue-grey lighten-3">
+              <div className="card-content black-text center" >
+                <span className="card-title">
+                  Details of Selected Cat: { props.cat.name }
+                </span>
+                <ul className="left-align">
+                  <li>Name: { props.cat.name }</li>
+                  <li>Number: { props.cat.number }</li>
+                  <li>Fat? { JSON.stringify(props.cat.fat) }</li>
+                  <li>Colors: { JSON.stringify(props.cat.colors) }</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      class CatApp extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = {
+            items: {{{ cats }}},
+            currentItem: {}
+          };
+          this.selectItem = this.selectItem.bind(this);
+        }
+
+        // event handler
+        selectItem = (event) => {
+          const found = this.state.items.find((item) => {
+            return item.name === event.target.innerHTML;
+          });
+          this.setState({ currentItem: found });
+        }
+
+        render() {
+          return (
+            <>
+            <div className="row">
+              <Cats cats={ this.state.items } clickHandler={ this.selectItem } />
+            </div>
+            <CatDetail cat={ this.state.currentItem } />
+            </>
+          );
+        }
       }
 
       ReactDOM.render(
-        <div className="row"><Cats cats={cats} clickHandler={showDetail} /></div>,
-        document.getElementById('root')
+        <CatApp />, document.getElementById('root')
       );
 
     </script>
