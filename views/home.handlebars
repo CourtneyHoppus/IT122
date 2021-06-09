@@ -8,7 +8,7 @@
 
       const Cats = (props) => {
         const listCats = props.cats.map((cat) =>
-          <li key={cat._id}>
+          <li key={ cat._id }>
             <div className="col s12 m6 center">
               <div className="card blue-grey lighten-3">
                 <div className="card-content black-text center" >
@@ -48,6 +48,54 @@
         );
       }
 
+      const CatForm = (props) => {
+        return (
+          <div className="col s12 m6 center">
+            <div className="card blue-grey lighten-3">
+              <div className="card-content black-text center" >
+                <span className="card-title">
+                  Details of Selected Cat: 
+                </span>
+                <form className="center">
+                  <div className="row">
+                    <label className='black-text' for='name'>
+                      Name: 
+                    </label>
+                    <div className='input-field inline'>
+                      <input value={ props.cat.name } className='input-field inline center' type="text" id="name" />
+                    </div>
+                  </div>
+                  <div className="row">
+                    <label className='black-text' for='number'>
+                      Number: 
+                    </label>
+                    <div className='input-field inline'>
+                      <input value={ props.cat.number } className='input-field inline center' type="text" id="number" />
+                    </div>
+                  </div>
+                  <div className="row">
+                    <label className='black-text' for='fat'>
+                      Fat? 
+                    </label>
+                    <div className='input-field inline'>
+                      <input value={ props.cat.fat } className='input-field inline center' type="text" id="fat" />
+                    </div>
+                  </div>
+                  <div className="row">
+                    <label className='black-text' for='colors'>
+                      Colors: 
+                    </label>
+                    <div className='input-field inline'>
+                      <input value={ props.cat.colors } className='input-field inline center' type="text" id="colors" />
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        );
+      }
+
       class CatApp extends React.Component {
         constructor(props) {
           super(props);
@@ -72,7 +120,7 @@
             <div className="row">
               <Cats cats={ this.state.items } clickHandler={ this.selectItem } />
             </div>
-            <CatDetail cat={ this.state.currentItem } />
+            <CatForm cat={ this.state.currentItem } />
             </>
           );
         }
