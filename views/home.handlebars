@@ -58,7 +58,7 @@
                 </span>
                 <form className="center">
                   <div className="row">
-                    <label className='black-text' for='name'>
+                    <label className='black-text' htmlFor='name'>
                       Name: 
                     </label>
                     <div className='input-field inline'>
@@ -66,7 +66,7 @@
                     </div>
                   </div>
                   <div className="row">
-                    <label className='black-text' for='number'>
+                    <label className='black-text' htmlFor='number'>
                       Number: 
                     </label>
                     <div className='input-field inline'>
@@ -74,7 +74,7 @@
                     </div>
                   </div>
                   <div className="row">
-                    <label className='black-text' for='fat'>
+                    <label className='black-text' htmlFor='fat'>
                       Fat? 
                     </label>
                     <div className='input-field inline'>
@@ -82,11 +82,11 @@
                     </div>
                   </div>
                   <div className="row">
-                    <label className='black-text' for='colors'>
+                    <label className='black-text' htmlFor='colors'>
                       Colors: 
                     </label>
                     <div className='input-field inline'>
-                      <input value={ props.cat.colors } className='input-field inline center' type="text" id="colors" />
+                      <input onChange={ props.handleChange } value={ props.cat.colors } className='input-field inline center' type="text" id="colors" />
                     </div>
                   </div>
                 </form>
@@ -104,6 +104,7 @@
             currentItem: {}
           };
           this.selectItem = this.selectItem.bind(this);
+          this.handleChange = this.handleChange.bind(this);
         }
 
         // event handler
@@ -114,13 +115,24 @@
           this.setState({ currentItem: found });
         }
 
+        handleChange = (event) => {
+          console.log('state.currentItem', this.state.currentItem)
+          let newItem = this.state.currentItem
+          console.log('newItem', newItem)
+          newItem[event.target.id] = event.target.value;
+          this.setState({ currentItem: newItem });
+          console.log('target', event.target)
+          console.log('target.id', event.target.id)
+          console.log('target.value', event.target.value)
+        }
+
         render() {
           return (
             <>
             <div className="row">
               <Cats cats={ this.state.items } clickHandler={ this.selectItem } />
             </div>
-            <CatForm cat={ this.state.currentItem } />
+            <CatForm cat={ this.state.currentItem } handleChange={ this.handleChange } />
             </>
           );
         }
