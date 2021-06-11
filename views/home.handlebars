@@ -17,9 +17,9 @@
                   </span>
                 </div>
                 <div className="card-action">
-                  <div className="btn-large white-text blue-grey lighten-1" onClick={ props.clickHandler }>
+                  <button className="btn-large" onClick={ props.clickHandler }>
                     { cat.name }
-                  </div>
+                  </button>
                 </div>
               </div>
             </div>
@@ -34,26 +34,6 @@
             <div className="card blue-grey lighten-3">
               <div className="card-content black-text center" >
                 <span className="card-title">
-                  Details of Selected Cat: { props.cat.name }
-                </span>
-                <ul className="left-align">
-                  <li>Name: { props.cat.name }</li>
-                  <li>Number: { props.cat.number }</li>
-                  <li>Fat? { JSON.stringify(props.cat.fat) }</li>
-                  <li>Colors: { JSON.stringify(props.cat.colors) }</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        );
-      }
-
-      const CatForm = (props) => {
-        return (
-          <div className="col s12 m6 center">
-            <div className="card blue-grey lighten-3">
-              <div className="card-content black-text center" >
-                <span className="card-title">
                   Details of Selected Cat: 
                 </span>
                 <form className="center">
@@ -62,7 +42,12 @@
                       Name: 
                     </label>
                     <div className='input-field inline'>
-                      <input value={ props.cat.name } className='input-field inline center' type="text" id="name" />
+                      <input
+                        onChange={ props.handleChange }
+                        value={ props.cat.name || '' }
+                        className='input-field inline center'
+                        type="text"
+                        id="name" />
                     </div>
                   </div>
                   <div className="row">
@@ -70,7 +55,12 @@
                       Number: 
                     </label>
                     <div className='input-field inline'>
-                      <input value={ props.cat.number } className='input-field inline center' type="text" id="number" />
+                      <input
+                        onChange={ props.handleChange } 
+                        value={ props.cat.number || '' } 
+                        className='input-field inline center' 
+                        type="text" 
+                        id="number" />
                     </div>
                   </div>
                   <div className="row">
@@ -78,7 +68,12 @@
                       Fat? 
                     </label>
                     <div className='input-field inline'>
-                      <input value={ props.cat.fat } className='input-field inline center' type="text" id="fat" />
+                      <input
+                        onChange={ props.handleChange }
+                        value={ JSON.stringify(props.cat.fat) || '' }
+                        className='input-field inline center'
+                        type="text"
+                        id="fat" />
                     </div>
                   </div>
                   <div className="row">
@@ -86,7 +81,21 @@
                       Colors: 
                     </label>
                     <div className='input-field inline'>
-                      <input onChange={ props.handleChange } value={ props.cat.colors } className='input-field inline center' type="text" id="colors" />
+                      <input
+                        onChange={ props.handleChange }
+                        value={ props.cat.colors || '' }
+                        className='input-field inline center'
+                        type="text"
+                        id="colors" />
+                    </div>
+                    <div className="row">
+                      <button
+                        className="btn waves-effect waves-light"
+                        name="clear"
+                        onClick={ props.clearForm }
+                      >
+                        Clear
+                      </button>
                     </div>
                   </div>
                 </form>
@@ -105,6 +114,7 @@
           };
           this.selectItem = this.selectItem.bind(this);
           this.handleChange = this.handleChange.bind(this);
+          this.clearForm = this.clearForm.bind(this);
         }
 
         // event handler
@@ -116,14 +126,14 @@
         }
 
         handleChange = (event) => {
-          console.log('state.currentItem', this.state.currentItem)
-          let newItem = this.state.currentItem
-          console.log('newItem', newItem)
+          let newItem = this.state.currentItem;
           newItem[event.target.id] = event.target.value;
           this.setState({ currentItem: newItem });
-          console.log('target', event.target)
-          console.log('target.id', event.target.id)
-          console.log('target.value', event.target.value)
+        }
+
+        clearForm = (event) => {
+          event.preventDefault();
+          this.setState({ currentItem: {} });
         }
 
         render() {
@@ -132,7 +142,10 @@
             <div className="row">
               <Cats cats={ this.state.items } clickHandler={ this.selectItem } />
             </div>
-            <CatForm cat={ this.state.currentItem } handleChange={ this.handleChange } />
+            <CatDetail
+              cat={ this.state.currentItem }
+              handleChange={ this.handleChange }
+              clearForm={ this.clearForm } />
             </>
           );
         }
