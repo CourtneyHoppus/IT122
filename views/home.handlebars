@@ -63,19 +63,19 @@
                         id="number" />
                     </div>
                   </div>
-                  <div className="row">
-                    <label className='black-text' htmlFor='fat'>
-                      Fat? 
-                    </label>
-                    <div className='input-field inline'>
-                      <input
-                        onChange={ props.handleChange }
-                        value={ JSON.stringify(props.cat.fat) || '' }
-                        className='input-field inline center'
-                        type="text"
-                        id="fat" />
-                    </div>
-                  </div>
+                    {{!-- <div className="row">
+                      <label className='black-text' htmlFor='fat'>
+                        Fat? 
+                      </label>
+                      <div className='input-field inline'>
+                        <input
+                          onChange={ handleFat }
+                          value={ fat || '' }
+                          className='input-field inline center'
+                          type="text"
+                          id="fat" />
+                      </div>
+                    </div> --}}
                   <div className="row">
                     <label className='black-text' htmlFor='colors'>
                       Colors: 
@@ -88,15 +88,29 @@
                         type="text"
                         id="colors" />
                     </div>
-                    <div className="row">
-                      <button
-                        className="btn waves-effect waves-light"
-                        name="clear"
-                        onClick={ props.clearForm }
-                      >
-                        Clear
-                      </button>
-                    </div>
+                  </div>
+                  <div className="row">
+                    <button
+                      className="btn waves-effect waves-light left"
+                      name="clear"
+                      onClick={ props.clearForm }
+                    >
+                      Clear
+                    </button>
+                    <button
+                      className="btn waves-effect waves-light"
+                      name="save"
+                      onClick={ props.saveForm }
+                    >
+                      Save
+                    </button>
+                    <button
+                      className="btn waves-effect waves-light right"
+                      name="delete"
+                      onClick={ props.deleteForm }
+                    >
+                      Delete
+                    </button>
                   </div>
                 </form>
               </div>
@@ -115,6 +129,8 @@
           this.selectItem = this.selectItem.bind(this);
           this.handleChange = this.handleChange.bind(this);
           this.clearForm = this.clearForm.bind(this);
+          this.saveForm = this.saveForm.bind(this);
+          this.deleteForm = this.deleteForm.bind(this);
         }
 
         // event handler
@@ -136,6 +152,14 @@
           this.setState({ currentItem: {} });
         }
 
+        saveForm = (event) => {
+          event.preventDefault();
+        }
+
+        deleteForm = (event) => {
+          event.preventDefault();
+        }
+
         render() {
           return (
             <>
@@ -145,7 +169,10 @@
             <CatDetail
               cat={ this.state.currentItem }
               handleChange={ this.handleChange }
-              clearForm={ this.clearForm } />
+              clearForm={ this.clearForm }
+              saveForm={ this.saveForm }
+              deleteForm={ this.deleteForm }
+            />
             </>
           );
         }

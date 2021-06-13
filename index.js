@@ -63,14 +63,7 @@ app.get('/api/cats', (req, res, next) => {
       if (!cats) {
         res.status(404).json('sorry, no cats found in database')
       } else {
-        res.json(cats.map((cat) => {
-          return {
-            name: cat.name,
-            number: cat.number,
-            colors: cat.colors,
-            fat: cat.fat,
-          }
-        }))
+        res.json(cats)
       }
     })
     .catch(err => next(err));
@@ -85,12 +78,7 @@ app.get('/api/cats/:name', (req, res, next) => {
       if (!cat) {
         res.status(404).json('sorry cat: ' + catName + ' was not found in database')
       } else {
-        res.json({
-          name: cat.name,
-          number: cat.number,
-          colors: cat.colors,
-          fat: cat.fat,
-        })
+        res.json(cat)
       }
     })
     .catch(err => next(err));
