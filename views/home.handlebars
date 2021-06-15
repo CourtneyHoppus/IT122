@@ -63,19 +63,6 @@
                         id="number" />
                     </div>
                   </div>
-                    {{!-- <div className="row">
-                      <label className='black-text' htmlFor='fat'>
-                        Fat? 
-                      </label>
-                      <div className='input-field inline'>
-                        <input
-                          onChange={ handleFat }
-                          value={ fat || '' }
-                          className='input-field inline center'
-                          type="text"
-                          id="fat" />
-                      </div>
-                    </div> --}}
                   <div className="row">
                     <label className='black-text' htmlFor='colors'>
                       Colors: 
@@ -152,11 +139,20 @@
           this.setState({ currentItem: {} });
         }
 
-        saveForm = (event) => {
+        saveForm = () => {
           event.preventDefault();
+          console.log(this.state.currentItem);
+          if (this.state.currentItem == {}) return
+          let newItem = this.state.currentItem;
+          fetch('/api/create', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(newItem)
+          })
+          .then(res => res.json());
         }
 
-        deleteForm = (event) => {
+        deleteForm = () => {
           event.preventDefault();
         }
 
