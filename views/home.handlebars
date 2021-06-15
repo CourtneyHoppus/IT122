@@ -141,19 +141,47 @@
 
         saveForm = () => {
           event.preventDefault();
-          console.log(this.state.currentItem);
-          if (this.state.currentItem == {}) return
           let newItem = this.state.currentItem;
+          if (!newItem.name) {
+            return;
+          }
           fetch('/api/create', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(newItem)
           })
-          .then(res => res.json());
+          .then(res => res.json())
+          .then((json) => {
+            let newItems;
+            if (!newItem._id) {
+              newItems = this.state.items;
+              newItem._id = json._id;
+              newItems.push(newItem);
+            } else {
+              newItems = this.state.items.map((item) => {
+                if (item._id === newItem._id) {
+                  item = newItem;
+                }
+                return item;
+              });
+            }
+            this.setState({ items: newItems });
+          });
         }
 
         deleteForm = () => {
           event.preventDefault();
+          let name = this.state.currentItem.name;
+          fetch('/api/delete/' + name)
+          .then((response) => {
+            return response.json();
+          })
+          .then((results) => {
+            let remainingItems = this.state.items.filter((item) => {
+              return item._id !== this.state.currentItem._id;
+          });
+          this.setState({ items: remainingItems, currentItem: {} });
+          });
         }
 
         render() {
